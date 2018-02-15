@@ -53,7 +53,7 @@ Vue.component('lists', {
                 '<tr v-for="menu in menuList">'+
                   '<td>'+
                     '<button @click="deletMenu(menu.name)" class="submit">削除</button>'+
-                    '<button @click="updateMenu(menu.name)" class="submit">編集</button>'+
+                    '<button @click="updateMenu(menu.name, menu.genre)" class="submit">編集</button>'+
                   '</td>'+
                   '<td><a @click="getDateList(menu.name)" class="menu-name">{{menu.name}}</a></td>'+
                   '<td>{{menu.genre}}</td>'+
@@ -88,10 +88,10 @@ Vue.component('lists', {
             this.menuList = getMenuList();
             console.log('[END]deleteMenu with ' + key);
         },
-        updateMenu : function(key) {
-            console.log('[STRAT]updateMenu with ' + key);
-            this.$router.push({path : 'regist' , query : { keyName : key}});
-            console.log('[END]updateMenu with ' + key);
+        updateMenu : function(key, genre) {
+            console.log('[STRAT]updateMenu with key :' + key + '. genre :' + genre);
+            this.$router.push({path : 'regist' , query : { keyName : key, genreName : genre}});
+            console.log('[END]updateMenu with key :' + key + '. genre :' + genre);
         },
         getDateList : function(key) {
             console.log('[STRAT]getDateList with ' + key);
@@ -270,7 +270,7 @@ Vue.component('regists', {
         return {
             menuName : this.$route.query.keyName,
             menuGenre : [],
-            genre : REGIST_MENU_GENRE.MEAT,
+            genre : this.$route.query.genreName,
             menuDate : ''
         }
     },
